@@ -10,14 +10,20 @@ Web stack debugging
 
 ## Read or watch:
 
-What is HTTPS?
-What are the 2 main elements that SSL is providing
-HAProxy SSL termination on Ubuntu16.04
-SSL termination
-Bash function
+[What is HTTPS?](https://www.instantssl.com/http-vs-https)
+
+[What are the 2 main elements that SSL is providing](https://www.sslshopper.com/why-ssl-the-purpose-of-using-ssl-certificates.html)
+
+[HAProxy SSL termination on Ubuntu16.04](https://fly.io/articles/load-balancing-https-with-lets-encrypt/)
+
+[SSL termination](https://en.wikipedia.org/wiki/TLS_termination_proxy)
+
+[Bash function](http://tldp.org/LDP/abs/html/complexfunct.html)
+
 man or help:
 
 awk
+
 dig
 
 # Learning Objectives
