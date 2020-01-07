@@ -6,9 +6,9 @@ DNS
 
 Web stack debugging
 
-##Resources
+## Resources
 
-##Read or watch:
+## Read or watch:
 
 What is HTTPS?
 What are the 2 main elements that SSL is providing
@@ -23,14 +23,14 @@ Learning Objectives
 
 At the end of this project, you are expected to be able to explain to anyone, without the help of Google:
 
-#General
+# General
 
 What is HTTPS SSL 2 main roles
 What is the purpose encrypting traffic
 What SSL termination means
 Requirements
 
-#General
+# General
 
 Allowed editors: vi, vim, emacs
 All your files will be interpreted on Ubuntu 16.04 LTS
