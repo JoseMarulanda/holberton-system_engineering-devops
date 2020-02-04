@@ -1,0 +1,33 @@
+#!/usr/bin/python3
+"""
+Python script that, using an API,
+export data in the JSON format.
+"""
+import json
+import sys
+import requests
+
+
+if __name__ == "__main__":
+    url = 'https://jsonplaceholder.typicode.com/'
+    user = '{}users'.format(url)
+    r = requests.get(user)
+    json_obj = r.json()
+    d_task = {}
+    for user in json_obj:
+        name = user.get('username')
+        userid = user.get('id')
+        todos = '{}todos?userId={}'.format(url, userid)
+        res = requests.get(todos)
+        tasks = res.json()
+        l_task = []
+        for task in tasks:
+            dict_task = {"username": name,
+                         "task": task.get('title'),
+                         "completed": task.get('completed')}
+            l_task.append(dict_task)
+        d_task[str(userid)] = l_task
+
+    filename = 'todo_all_employees.json'
+    with open(filename, mode='w') as f:
+        json.dump(d_task, f)
