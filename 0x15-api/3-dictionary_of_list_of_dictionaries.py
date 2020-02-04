@@ -1,20 +1,17 @@
 #!/usr/bin/python3
-"""
-Python script that, using an API,
-export data in the JSON format.
-"""
+""" Script that uses JSONPlaceholder API to get information about employee """
 import json
-import sys
 import requests
+import sys
 
 
 if __name__ == "__main__":
     url = 'https://jsonplaceholder.typicode.com/'
     user = '{}users'.format(url)
-    r = requests.get(user)
-    json_obj = r.json()
+    res = requests.get(user)
+    json_o = res.json()
     d_task = {}
-    for user in json_obj:
+    for user in json_o:
         name = user.get('username')
         userid = user.get('id')
         todos = '{}todos?userId={}'.format(url, userid)
@@ -27,7 +24,6 @@ if __name__ == "__main__":
                          "completed": task.get('completed')}
             l_task.append(dict_task)
         d_task[str(userid)] = l_task
-
     filename = 'todo_all_employees.json'
     with open(filename, mode='w') as f:
         json.dump(d_task, f)
