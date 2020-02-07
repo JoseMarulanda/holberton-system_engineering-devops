@@ -1,44 +1,34 @@
 #!/usr/bin/python3
-import requests
-import sys
-"""
-Module to interface with the reddit api
-"""
+"""Top Ten"""
+from requests import get
+from sys import argv
 
 
-def count_words(subreddit, word_list=[], after=None, all_results=[]):
+def count_words(subreddit, word_list, after="", counter={}, t=0):
+    """prints titles of first 10 hot posts listed for a given subreddit
+    Args:
+        subreddit: input name of the subreddit
+        word_list: input list of words to look for
     """
-    Uses the reddit api to get a count of search terms from subreddit hot posts
-    """
-    param = {}
-    new_after = None
-    if after is not None:
-        param = {'after': after}
-    url = 'https://reddit.com/r/' + subreddit + '/hot/.json'
-    headers = {'User-Agent': "lala"}
+    if t == 0:
+        for word in word_list:
+            counter[word] = 0
+    headers = {'User-Agent': 'jose'}
+    json = get('https://api.reddit.com/r/{}/hot?after={}'.
+               format(subreddit, after), headers=headers).json()
     try:
-        r = requests.get(url, headers=headers, params=param)
-        new_after = r.json()['data'].get('after')
-        for data in r.json()['data'].get('children'):
-            all_results.append(data['data'].get('title'))
-    except:
-        return(None)
-    if new_after is not None:
-        return(count_words(subreddit, word_list, new_after, all_results))
-    else:
-        word_dict = dict.fromkeys((word_list.lower()), 0)
-        line = ""
-        for item in all_results:
-            line = item.lower()
-            for word in word_list:
-                if word in line:
-                    word_dict[word] += 1
-        for key in word_dict:
-            print("{:s}: {:d}".format(key, word_dict[key]))
-        return(all_results)
-
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Please pass an argument for the subreddit to search.")
-    else:
-        print(len(count_words(sys.argv[1], [x for x in sys.argv[2].split()])))
+        key = json['data']['after']
+        parent = json['data']['children']
+        for obj in parent:
+            for word in counter:
+                counter[word] += obj['data']['title'].lower().split(
+                    ' ').count(word.lower())
+        if key is not None:
+            count_words(subreddit, word_list, key, counter, 1)
+        else:
+            res = sorted(counter.items(), key=lambda i: i[1], reverse=True)
+            for key, value in res:
+                if value != 0:
+                    print('{}: {}'.format(key, value))
+    except Exception:
+        return None
